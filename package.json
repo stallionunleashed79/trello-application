@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.26",
+    "nanoid": "^4.0.1",
     "use-immer": "^0.8.1"
   }
 }
