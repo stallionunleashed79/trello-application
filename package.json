@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "use-immer": "^0.8.1"
   }
 }
