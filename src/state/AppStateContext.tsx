@@ -2,6 +2,7 @@ import { createContext, useContext, Dispatch } from 'react'
 import { appStateReducer } from './AppStateReducer';
 import  { useImmerReducer } from 'use-immer'
 import { Action } from './actions';
+import { DragItem } from '../DragItem'
 
 export type Task = {
     id: string;
@@ -16,6 +17,7 @@ export type List = {
 
 export type AppState = {
     lists: Array<List>
+    draggedItem: DragItem | null
 }
 
 interface Props {
@@ -23,6 +25,7 @@ interface Props {
   }
 
 const appData: AppState = {
+    draggedItem: null,
     lists:[
         {
             id: '0',
@@ -61,17 +64,18 @@ type AppStateContextProps = {
     lists: Array<List>,
     getTasksByListId: (id: string) => Array<Task>,
     dispatch: Dispatch<Action>
+    draggedItem: DragItem | null
 }
 
 const AppStateContext = createContext<AppStateContextProps>({} as AppStateContextProps)
 
 export const AppStateProvider: React.FC<Props> = ({ children }) => {
     const [state, dispatch] = useImmerReducer(appStateReducer, appData);
-    const { lists } = state;
+    const { lists, draggedItem } = state;
     const getTasksByListId = (id: string) => lists.find(list => list.id === id)?.tasks ?? []
 
     return (
-        <AppStateContext.Provider value={ { lists, getTasksByListId, dispatch }}>{children}</AppStateContext.Provider>
+        <AppStateContext.Provider value={{ lists, getTasksByListId, dispatch, draggedItem }}>{children}</AppStateContext.Provider>
     )
 }
 

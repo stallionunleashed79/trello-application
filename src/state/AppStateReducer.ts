@@ -26,10 +26,13 @@ export const appStateReducer = (draft: AppState, action: Action): AppState | voi
         const { draggedById, hoverId } = action.payload;
         const draggedByIndex = findItemIndexById(draft.lists, draggedById);
         const hoverIndex = findItemIndexById(draft.lists, hoverId);
-        moveItem(draft.lists, draggedByIndex, hoverIndex)
+        draft.lists = moveItem(draft.lists, draggedByIndex, hoverIndex)
         break
      }
-
+    case 'SET_DRAGGED_ITEM': {
+        draft.draggedItem = action.payload
+        break;
+    }
     default: {
         break
     }
